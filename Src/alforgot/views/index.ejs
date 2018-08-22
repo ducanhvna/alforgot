@@ -1,36 +1,107 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="/socket.io/socket.io.js"></script>
-    <script src='https://code.jquery.com/jquery-3.3.1.js'></script>
-    <script>
-      var socket = io();
-      $(function(){
-        var socket = io();
-        $('form').submit(function(){
-            socket.emit('chat message', $('#m').val());
-            $('#m').val('');
-            return false;
-        });
-        socket.on('chat message', function (msg) {
-          $('#messages').append($('<li>').text(msg));
-        })
-      });
 
-    </script>
-  </head>
-  <body>
-    <h1><%= title %></h1>
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script src="/socket.io/socket.io.js"></script>
+  <script src='https://code.jquery.com/jquery-3.3.1.js'></script>
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://use.fontawesome.com/45e03a14ce.js"></script>
+  <!------ Include the above in your HEAD tag ---------->
+  <script>
+    var socket = io();
+    $(function () {
+      var socket = io();
+      $('form').submit(function () {
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+      });
+      socket.on('chat message', function (msg) {
+        // $('#messages').append($('<li>').text(msg));
+        $('#messages').text(msg);
+      })
+    });
+
+  </script>
+</head>
+
+<body>
+  <h1><%= title %></h1>
     <p>Welcome to <%= title %></p>
    
+
+  <!-- 
     <form action= "">
       <input id="m" autocomplete="off"/>
       <button>Send</button>
     </form>
     <ul id="messages">
-    </ul>
-  </body>
-  
+    </ul> -->
+
+  <div class="main_section">
+    <div class="container">
+      <div class="chat_container">
+        <div class="col-sm-9 message_section">
+          <div class="row">
+            <div class="new_message_head">
+              <div class="pull-left"><button><i class="fa fa-plus-square-o" aria-hidden="true"></i> New Message</button></div>
+              <div class="pull-right">
+                <div class="dropdown">
+                  <button class="dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-cogs" aria-hidden="true"></i> Setting
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Logout</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <!--new_message_head-->
+
+            <div class="chat_area">
+              <ul class="list-unstyled">
+                <li class="left clearfix">
+                  <span class="chat-img1 pull-left">
+                    <img src="https://lh6.googleusercontent.com/-y-MY2satK-E/AAAAAAAAAAI/AAAAAAAAAJU/ER_hFddBheQ/photo.jpg" alt="User Avatar"
+                      class="img-circle">
+                  </span>
+                  <div class="chat-body1 clearfix">
+                    <p id="messages">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a
+                      piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock,
+                      a Latin professor at Hampden-Sydney College in Virginia.</p>
+                    <div class="chat_time pull-right">09:40PM</div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <!--chat_area-->
+            <div class="message_write">
+              <form action="">
+                <input class="form-control" placeholder="type a message" id="m" autocomplete="off" />
+                <div class="clearfix"></div>
+                <div class="chat_bottom"><a href="#" class="pull-left upload_btn"><i class="fa fa-cloud-upload" aria-hidden="true"></i>
+                    Add Files</a>
+                  <button class="pull-right btn btn-success">
+                    Send</div>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <!--message_section-->
+      </div>
+    </div>
+  </div>
+</body>
+
 </html>
