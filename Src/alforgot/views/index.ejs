@@ -3,6 +3,19 @@
   <head>
     <title><%= title %></title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/socket.io/socket.io.js"></script>
+    <script src='https://code.jquery.com/jquery-3.3.1.js'></script>
+    <script>
+      var socket = io();
+      $(function(){
+        var socket = io();
+        $('form').submit(function(){
+            socket.emit('chat message', $('#m').val());
+            $('#m').val('');
+            return false;
+        });
+      });
+    </script>
   </head>
   <body>
     <h1><%= title %></h1>
