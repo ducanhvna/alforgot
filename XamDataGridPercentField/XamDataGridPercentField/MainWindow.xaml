@@ -1,0 +1,63 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:igWPF="http://schemas.infragistics.com/xaml/wpf" 
+        xmlns:igDP="http://infragistics.com/DataPresenter"
+        xmlns:igEditors="http://infragistics.com/Editors"
+        xmlns:local="clr-namespace:XamDataGridPercentField"
+        x:Class="XamDataGridPercentField.MainWindow"
+        Title="MainWindow"  Height="350" Width="525">
+
+    <StackPanel Orientation="Vertical">
+        <Button Content="Track Projects" Margin="4" Click="TrackProjects" />
+
+        <igWPF:XamDataGrid DataSource="{Binding }" Margin="4">
+            <igDP:XamDataGrid.Resources>
+                <local:PercentToBrushConverter x:Key="percentToBrushConverter" />
+                <Style x:Key="percentageFieldStyle" TargetType="igEditors:XamTextEditor">
+                    <Setter Property="Format" Value="P0" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="ToolTip" Value="{Binding Value, StringFormat='0.00', RelativeSource={RelativeSource Self}}" />
+                </Style>
+            </igDP:XamDataGrid.Resources>
+
+            <!-- performance suggestion for readonly grids -->
+            <igDP:XamDataGrid.SuppressedEvents>
+                <igDP:RoutedEventWrapper RoutedEvent="igWPF:ValueEditor.TextChanged" />
+                <igDP:RoutedEventWrapper RoutedEvent="igWPF:ValueEditor.ValueChanged" />
+            </igDP:XamDataGrid.SuppressedEvents>
+
+            <igDP:XamDataGrid.FieldLayoutSettings>
+                <igDP:FieldLayoutSettings AutoGenerateFields="False" />
+            </igDP:XamDataGrid.FieldLayoutSettings>
+
+            <igDP:XamDataGrid.FieldLayouts>
+                <igWPF:FieldLayout>
+                    <igWPF:FieldLayout.Fields>
+                        <igWPF:TextField Name="Description" />
+
+                        <igWPF:Field Label="% Complete" Name="PercentComplete" 
+                                     EditorStyle="{StaticResource percentageFieldStyle}">
+                            <igWPF:Field.CellBindings>
+                                <igWPF:CellBinding Property="Background" Target="CellValuePresenter"
+                                            Binding="{Binding DataItem.PercentComplete, 
+                                                      Converter={StaticResource percentToBrushConverter}, 
+                                                      TargetNullValue=White, FallbackValue=Silver}"/>
+                            </igWPF:Field.CellBindings>
+                        </igWPF:Field>
+
+                        <igWPF:Field Label="% Cost" Name="PercentCost" EditorStyle="{StaticResource percentageFieldStyle}">
+                            <igWPF:Field.CellBindings>
+                                <igWPF:CellBinding Property="Background" Target="CellValuePresenter"
+                                                   Binding="{Binding DataItem.PercentCost, 
+                                                             Converter={StaticResource percentToBrushConverter}, 
+                                                             TargetNullValue=White, FallbackValue=Silver}"/>
+                            </igWPF:Field.CellBindings>
+                        </igWPF:Field>
+
+                    </igWPF:FieldLayout.Fields>
+                </igWPF:FieldLayout>
+            </igDP:XamDataGrid.FieldLayouts>
+        </igWPF:XamDataGrid>
+    </StackPanel>
+</Window>
